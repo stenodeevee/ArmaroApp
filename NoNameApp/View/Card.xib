@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="Card" customModule="Armaro" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NS4-ke-35f">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IsV-oK-bbx">
+                    <rect key="frame" x="20" y="818" width="77" height="24"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brand" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45T-rE-c52">
+                    <rect key="frame" x="20" y="789" width="53" height="24"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xf1-i1-B4e">
+                    <rect key="frame" x="359" y="807" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="nWM-hu-Y07"/>
+                        <constraint firstAttribute="width" constant="35" id="nkz-7Z-J6T"/>
+                    </constraints>
+                    <state key="normal" image="info_icon"/>
+                    <connections>
+                        <action selector="infoButtonDidTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="dfq-Pj-cY1"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="IsV-oK-bbx" firstAttribute="top" secondItem="45T-rE-c52" secondAttribute="bottom" constant="5" id="3ea-Kf-UZp"/>
+                <constraint firstItem="IsV-oK-bbx" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="EDI-et-r3D"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="xf1-i1-B4e" secondAttribute="trailing" constant="20" id="OCJ-Ib-IKu"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="xf1-i1-B4e" secondAttribute="bottom" constant="20" id="PGo-hS-AUC"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="NS4-ke-35f" secondAttribute="bottom" id="SUE-IT-aOF"/>
+                <constraint firstItem="NS4-ke-35f" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="dmi-3O-7Wa"/>
+                <constraint firstItem="NS4-ke-35f" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="eGs-as-juf"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="IsV-oK-bbx" secondAttribute="bottom" constant="20" id="k1Y-hM-tdB"/>
+                <constraint firstItem="45T-rE-c52" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="uh4-hE-WAf"/>
+                <constraint firstItem="NS4-ke-35f" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ujd-sb-rmw"/>
+            </constraints>
+            <connections>
+                <outlet property="brandLabel" destination="45T-rE-c52" id="HLv-pD-Tg6"/>
+                <outlet property="infoButton" destination="xf1-i1-B4e" id="As2-xd-YR1"/>
+                <outlet property="locationLabel" destination="IsV-oK-bbx" id="Fj3-pD-WKF"/>
+                <outlet property="photo" destination="NS4-ke-35f" id="QUO-3S-1ru"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="58.928571428571423"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="info_icon" width="100" height="100"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
