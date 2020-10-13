@@ -65,14 +65,7 @@ class ConversationTableViewCell: UITableViewCell {
             DispatchQueue.main.async {
                 self.userImageView.loadImage(photoUrl!)
             }
-            
-            
-            
         })
-        
-        
-        
-        
     }
 
 }

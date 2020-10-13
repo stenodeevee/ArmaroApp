@@ -11,7 +11,7 @@ import UIKit
 extension ViewController{
     
     func setupHeaderTitle() {
-        let title = "Welcome to our App"
+        let title = "Welcome to ARMARO"
         let subtitle = "\nSign-in to your account"
     
         let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font : UIFont.init(name: "Didot", size: 28)!, NSAttributedString.Key.foregroundColor : UIColor.black ])

@@ -15,6 +15,8 @@
 		6B175801250A692900E02F73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B1757FF250A692900E02F73 /* LaunchScreen.storyboard */; };
 		6B1CD596252389E500390E3B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1CD595252389E500390E3B /* ChatViewController.swift */; };
 		6B24F017250E521E00DC2431 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B24F016250E521E00DC2431 /* GoogleService-Info.plist */; };
+		6B24F9B82535EB95000CFE19 /* otherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B24F9B72535EB95000CFE19 /* otherUserProfileViewController.swift */; };
+		6B24F9BB2535F0A7000CFE19 /* otherUserProfileCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B24F9BA2535F0A7000CFE19 /* otherUserProfileCollectionReusableView.swift */; };
 		6B2C432B252CAD080030A4EC /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2C432A252CAD080030A4EC /* PhotoViewController.swift */; };
 		6B31AD4925304373006B732E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B31AD4825304373006B732E /* DetailViewController.swift */; };
 		6B31AD4C25305059006B732E /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B31AD4B25305059006B732E /* Extension.swift */; };
@@ -75,6 +77,8 @@
 		6B175802250A692900E02F73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6B1CD595252389E500390E3B /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		6B24F016250E521E00DC2431 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6B24F9B72535EB95000CFE19 /* otherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otherUserProfileViewController.swift; sourceTree = "<group>"; };
+		6B24F9BA2535F0A7000CFE19 /* otherUserProfileCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otherUserProfileCollectionReusableView.swift; sourceTree = "<group>"; };
 		6B2C432A252CAD080030A4EC /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		6B31AD4825304373006B732E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		6B31AD4B25305059006B732E /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -170,16 +174,17 @@
 				6BD2578E251E552100705B77 /* Cells */,
 				6B8ADCBE251CC636007DA8A4 /* Profile Feed */,
 				6B1CD5942523898600390E3B /* Other */,
+				6BEF080C2535A6E0008EB1F4 /* Api */,
+				6B1757FD250A692900E02F73 /* Assets.xcassets */,
+				6B1757FF250A692900E02F73 /* LaunchScreen.storyboard */,
 				6B5B5322250F8F9000705DE4 /* Api.swift */,
 				6B5B5328250F989A00705DE4 /* Ref.swift */,
-				6B5B5324250F8FE300705DE4 /* UserApi.swift */,
-				6B5B5326250F94CB00705DE4 /* StorageService.swift */,
 				6B1757F4250A692700E02F73 /* AppDelegate.swift */,
 				6B31AD4B25305059006B732E /* Extension.swift */,
 				6B31AD5F2530BA73006B732E /* User.swift */,
 				6B746D422518A68F0076D26F /* Post.swift */,
-				6B1757FD250A692900E02F73 /* Assets.xcassets */,
-				6B1757FF250A692900E02F73 /* LaunchScreen.storyboard */,
+				6B5B5324250F8FE300705DE4 /* UserApi.swift */,
+				6B5B5326250F94CB00705DE4 /* StorageService.swift */,
 				6B24F016250E521E00DC2431 /* GoogleService-Info.plist */,
 				6B175802250A692900E02F73 /* Info.plist */,
 			);
@@ -211,6 +216,7 @@
 				6BD2579D251E5F2A00705B77 /* EditSizesViewController.swift */,
 				6B8ADCCD251CF324007DA8A4 /* EditProfileViewController.swift */,
 				6B8ADCCA251CE057007DA8A4 /* PostViewController.swift */,
+				6B24F9B72535EB95000CFE19 /* otherUserProfileViewController.swift */,
 				6B475654251B47E3001F910A /* SpecsViewController.swift */,
 				6B31AD4825304373006B732E /* DetailViewController.swift */,
 				6B31AD5C2530B11A006B732E /* NewMatchTableViewController.swift */,
@@ -269,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				6B8ADCBB251CC5D5007DA8A4 /* ProfileInfoHeaderCollectionReusableView.swift */,
+				6B24F9BA2535F0A7000CFE19 /* otherUserProfileCollectionReusableView.swift */,
 			);
 			path = "CollectionView Headers";
 			sourceTree = "<group>";
@@ -291,6 +298,13 @@
 				6B5D9A6B2521E6E200F2F2F8 /* Feed and Post */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		6BEF080C2535A6E0008EB1F4 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Api;
 			sourceTree = "<group>";
 		};
 		A28E7A64C6CC39B87F3C5949 /* Pods */ = {
@@ -446,6 +460,7 @@
 				6BAE56F12514F37700034C52 /* PostingViewController.swift in Sources */,
 				6B7907E1252E301400E801AF /* ItemsAroundCollectionViewCell.swift in Sources */,
 				6B31AD4C25305059006B732E /* Extension.swift in Sources */,
+				6B24F9BB2535F0A7000CFE19 /* otherUserProfileCollectionReusableView.swift in Sources */,
 				6BD25794251E57B300705B77 /* FeedPostHeaderTableViewCell.swift in Sources */,
 				6B3CE9B5250BBAFF00B2EACD /* SignInViewController.swift in Sources */,
 				6B3CE9B3250BABF000B2EACD /* SignUpViewController+UI.swift in Sources */,
@@ -457,6 +472,7 @@
 				6B3CE9BB250BC11100B2EACD /* ForgotPasswordViewController+UI.swift in Sources */,
 				6B8ADCCB251CE057007DA8A4 /* PostViewController.swift in Sources */,
 				6B31AD4925304373006B732E /* DetailViewController.swift in Sources */,
+				6B24F9B82535EB95000CFE19 /* otherUserProfileViewController.swift in Sources */,
 				6B5B5323250F8F9000705DE4 /* Api.swift in Sources */,
 				6BD25790251E55E600705B77 /* FeedPostTableViewCell.swift in Sources */,
 				6B1757F5250A692700E02F73 /* AppDelegate.swift in Sources */,
@@ -624,7 +640,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LGY4J5K28W;
 				INFOPLIST_FILE = NoNameApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -642,7 +660,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LGY4J5K28W;
 				INFOPLIST_FILE = NoNameApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

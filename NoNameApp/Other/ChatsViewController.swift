@@ -383,6 +383,25 @@ extension ChatsViewController: MessagesDataSource, MessagesLayoutDelegate, Messa
 }
 
 extension ChatsViewController: MessageCellDelegate {
+    func didTapAvatar(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell) else {
+            return
+        }
+        let message = messages[indexPath.section]
+        if message.sender.senderId != self.otherUserId {
+            // tapped the current avatar
+        }
+        else {
+            // tapped the other user
+            print(self.otherUserId)
+            let vc = otherUserProfileViewController()
+            vc.navigationItem.largeTitleDisplayMode = .never
+            vc.otherUserId = self.otherUserId as? String
+            navigationController?.pushViewController(vc, animated: true)
+        }
+        
+    }
+    
     func didTapImage(in cell: MessageCollectionViewCell) {
         
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else {
@@ -422,6 +441,8 @@ extension ChatsViewController: UIImagePickerControllerDelegate, UINavigationCont
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
+    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
