@@ -12,6 +12,9 @@ PODS:
   - Firebase/Database (6.32.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 6.6.0)
+  - Firebase/Messaging (6.32.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 4.6.2)
   - Firebase/Storage (6.32.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 3.9.0)
@@ -46,6 +49,19 @@ PODS:
     - GoogleUtilities/Environment (~> 6.7)
     - GoogleUtilities/UserDefaults (~> 6.7)
     - PromisesObjC (~> 1.2)
+  - FirebaseInstanceID (4.6.0):
+    - FirebaseCore (~> 6.10)
+    - FirebaseInstallations (~> 1.6)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+  - FirebaseMessaging (4.6.2):
+    - FirebaseCore (~> 6.10)
+    - FirebaseInstanceID (~> 4.6)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Reachability (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+    - Protobuf (>= 3.9.2, ~> 3.9)
   - FirebaseStorage (3.9.0):
     - FirebaseCore (~> 6.10)
     - GTMSessionFetcher/Core (~> 1.1)
@@ -93,6 +109,7 @@ PODS:
   - nanopb/encode (1.30906.0)
   - ProgressHUD (13.4)
   - PromisesObjC (1.2.10)
+  - Protobuf (3.13.0)
   - Realm (5.4.3):
     - Realm/Headers (= 5.4.3)
   - Realm/Headers (5.4.3)
@@ -107,6 +124,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - Firebase/Messaging
   - Firebase/Storage
   - GeoFire
   - JGProgressHUD
@@ -124,6 +142,8 @@ SPEC REPOS:
     - FirebaseCoreDiagnostics
     - FirebaseDatabase
     - FirebaseInstallations
+    - FirebaseInstanceID
+    - FirebaseMessaging
     - FirebaseStorage
     - GeoFire
     - GoogleAppMeasurement
@@ -137,6 +157,7 @@ SPEC REPOS:
     - nanopb
     - ProgressHUD
     - PromisesObjC
+    - Protobuf
     - Realm
     - RealmSwift
     - SDWebImage
@@ -149,6 +170,8 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: 7415bfb3883b3500c5a95c42b6ba66baae78f600
   FirebaseDatabase: 13a865a4b85897462b930eb683bda8f52583713f
   FirebaseInstallations: 466c7b4d1f58fe16707693091da253726a731ed2
+  FirebaseInstanceID: 84f5f5762f1bee94ca2254f693bbf5aec6666504
+  FirebaseMessaging: 82d75b3770a78bbce470769a6980429608b4c407
   FirebaseStorage: 33b92875a9b556824886cc7a65120c7d2cb3a8d8
   GeoFire: 67b5276c561434b4e4c7ea567c2c4d64e711339c
   GoogleAppMeasurement: e3618c6e9f5166a6b320b03b759da3b04ec2a101
@@ -162,10 +185,11 @@ SPEC CHECKSUMS:
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   ProgressHUD: 137a7fc677487c5581668f4490563124fb35c232
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
+  Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
   Realm: e3d5fcc50fd79ddf87a2d86301f6edbf57531f84
   RealmSwift: db608068eccc54bce47928e8118bde13c120c307
   SDWebImage: a990c053fff71e388a10f3357edb0be17929c9c5
 
-PODFILE CHECKSUM: 5f88e25b3fb36bfa38ec717e0f945b31f0f1d1d6
+PODFILE CHECKSUM: 697ce243865945416f98b650fc0e927bebe643a1
 
 COCOAPODS: 1.9.3

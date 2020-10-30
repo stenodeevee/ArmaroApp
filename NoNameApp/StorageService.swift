@@ -84,20 +84,19 @@ extension StorageService {
      */
     
     /// Creates new conversation with target user ID and first message sent
-    public func createNewConversation(with otherUserId: String, nname: String, firstMessage: Message, completion: @escaping (Bool) -> Void ) {
-        guard let currentId = Auth.auth().currentUser?.uid,
-              let currentName = Auth.auth().currentUser?.displayName else {
+    public func createNewConversation(with otherPostId: String, currentPostId: String ,nname: String, firstMessage: Message, completion: @escaping (Bool) -> Void ) {
+        guard let currentName = Auth.auth().currentUser?.displayName else {
             return
         }
-        let ref = database.child(REF_USER).child("\(currentId)")
+        let ref = database.child("items").child("\(currentPostId)")
         ref.observeSingleEvent(of: .value, with: { [weak self ] snapshot in
             guard var userNode = snapshot.value as? [String: Any]  else {
                 completion(false)
-                print("user not found")
+                print("post not found")
                 return
             }
             let messageDate = firstMessage.sentDate
-            let dateString = ChatsViewController.dateFormatter.string(from: messageDate)
+            let dateString = ChatViewController.dateFormatter.string(from: messageDate)
             var message = ""
             
             switch firstMessage.kind {
@@ -128,7 +127,7 @@ extension StorageService {
             
             let newConversationData: [String: Any] = [
                 "id" : conversationId,
-                "other_user_id": otherUserId,
+                "other_post_id": otherPostId,
                 "name": nname,
                 "latest_message": [
                     "data": dateString,
@@ -137,7 +136,7 @@ extension StorageService {
             
             let recipient_newConversationData: [String: Any] = [
                 "id" : conversationId,
-                "other_user_id": currentId,
+                "other_post_id": currentPostId,
                 "name": currentName,
                 "latest_message": [
                     "data": dateString,
@@ -146,14 +145,14 @@ extension StorageService {
             
             ///update recipient conversation entry
             
-            self?.database.child("users/\(otherUserId)/conversations").observeSingleEvent(of: .value, with: { [weak self ] snapshot in
+            self?.database.child("items/\(otherPostId)/conversations").observeSingleEvent(of: .value, with: { [weak self ] snapshot in
                 if var conversations = snapshot.value as? [[String: Any]] {
                     //append
                     conversations.append(recipient_newConversationData)
-                    self?.database.child("users/\(otherUserId)/conversations").setValue([conversations])
+                    self?.database.child("items/\(otherPostId)/conversations").setValue(conversations)
                 }
                 else {
-                    self?.database.child("users/\(otherUserId)/conversations").setValue([recipient_newConversationData])
+                    self?.database.child("items/\(otherPostId)/conversations").setValue([recipient_newConversationData])
                     
                 }
             })
@@ -169,7 +168,7 @@ extension StorageService {
                         completion(false)
                         return
                     }
-                    self?.finishCreatingConversation(name: nname, conversationID: conversationId, firstMessage: firstMessage, completion: completion)
+                    self?.finishCreatingConversation(name: nname, conversationID: conversationId, currentPostID: currentPostId, firstMessage: firstMessage, completion: completion)
                 })
                 
             }
@@ -184,7 +183,7 @@ extension StorageService {
                         completion(false)
                         return
                     }
-                    self?.finishCreatingConversation(name: nname, conversationID: conversationId, firstMessage: firstMessage, completion: completion)
+                    self?.finishCreatingConversation(name: nname, conversationID: conversationId, currentPostID: currentPostId, firstMessage: firstMessage, completion: completion)
                 
                 })
                     
@@ -192,7 +191,7 @@ extension StorageService {
         })
     }
     
-    private func finishCreatingConversation(name: String, conversationID: String, firstMessage: Message, completion: @escaping (Bool) -> Void ) {
+    private func finishCreatingConversation(name: String, conversationID: String, currentPostID: String, firstMessage: Message, completion: @escaping (Bool) -> Void ) {
  //       { "id": String,
  //       "type": text ,
  //       "content": ,
@@ -229,19 +228,15 @@ extension StorageService {
         
         
         let messageDate = firstMessage.sentDate
-        let dateString = ChatsViewController.dateFormatter.string(from: messageDate)
+        let dateString = ChatViewController.dateFormatter.string(from: messageDate)
         
-        guard let currentUserId = Auth.auth().currentUser?.uid else {
-            completion(false)
-            return
-        }
         
         let message: [String: Any] = [
             "id": firstMessage.messageId,
             "type": firstMessage.kind.messageKindString,
             "content": content,
             "date": dateString,
-            "sender_id": currentUserId,
+            "sender_id": currentPostID,
             "is_read": false,
             "name": name
         ]
@@ -265,16 +260,17 @@ extension StorageService {
 
 
     /// Fetches and returns all conversations for the current user with passed in email
-    public func getAllConversation(for userId: String, completion: @escaping (Result<[Conversation],Error>) -> Void ) {
-        database.child("users/\(userId)/conversations").observe(.value, with: {snapshot in
+    public func getAllConversation(for postId: String, completion: @escaping (Result<[Conversation],Error>) -> Void ) {
+        database.child("items/\(postId)/conversations").observe(.value, with: {snapshot in
             guard let value = snapshot.value as? [[String: Any]] else{
+                print(postId, "has no conversation")
                 return
             }
             
             let conversations: [Conversation] = value.compactMap({dictionary in
                 guard let conversationId = dictionary["id"] as? String,
                       let name = dictionary["name"] as? String,
-                      let otherUserId = dictionary["other_user_id"] as? String,
+                      let otherPostId = dictionary["other_post_id"] as? String,
                       let latestMessage = dictionary["latest_message"] as? [String: Any],
                       let date = latestMessage["data"] as? String,
                       let message = latestMessage["message"] as? String,
@@ -282,7 +278,7 @@ extension StorageService {
                     return nil
                 }
                 let latestMessageObject = LatestMessage(date: date, text: message, isRead: isRead)
-                return Conversation(id: conversationId, name: name, otherUserId: otherUserId, latestMessage: latestMessageObject)
+                return Conversation(id: conversationId, name: name, otherPostId: otherPostId, currentPostId: postId, latestMessage: latestMessageObject)
             })
             
             
@@ -309,7 +305,7 @@ extension StorageService {
                       let type = dictionary["type"] as? String,
                       let dateString = dictionary["date"] as? String,
                       let is_read = dictionary["is_read"] as? Bool,
-                      let date = ChatsViewController.dateFormatter.date(from: dateString) else {
+                      let date = ChatViewController.dateFormatter.date(from: dateString) else {
                     return nil
                     
                 }
@@ -358,19 +354,17 @@ extension StorageService {
             })
             
             completion(.success(messages))
-        })    }
+        })
+        
+    }
 
 
     /// sends a message with target conversation and message
-    public func sendMessage(to conversation: String, otherUserId: String, name: String, newMessage: Message, completion: @escaping (Bool) -> Void ) {
+    public func sendMessage(to conversation: String, otherPostId: String, currentPostId: String ,name: String, newMessage: Message, completion: @escaping (Bool) -> Void ) {
         // add new message to messages
         // update sender latest message
         // update recipient latest message
-        
-        guard let currentId = Auth.auth().currentUser?.uid  else {
-            completion(false)
-            return
-        }
+
         
         
         database.child("\(conversation)/messages").observeSingleEvent(of: .value, with: { [weak self] snapshot in
@@ -413,19 +407,15 @@ extension StorageService {
             
             
             let messageDate = newMessage.sentDate
-            let dateString = ChatsViewController.dateFormatter.string(from: messageDate)
+            let dateString = ChatViewController.dateFormatter.string(from: messageDate)
             
-            guard let currentUserId = Auth.auth().currentUser?.uid else {
-                completion(false)
-                return
-            }
             
             let newMessageEntry: [String: Any] = [
                 "id": newMessage.messageId,
                 "type": newMessage.kind.messageKindString,
                 "content": content,
                 "date": dateString,
-                "sender_id": currentUserId,
+                "sender_id": currentPostId,
                 "is_read": false,
                 "name": name
             ]
@@ -440,7 +430,7 @@ extension StorageService {
                 
                 completion(true)
                 
-                strongSelf.database.child("users/\(currentId)/conversations").observeSingleEvent(of: .value, with: {snapshot in
+                strongSelf.database.child("items/\(currentPostId)/conversations").observeSingleEvent(of: .value, with: {snapshot in
                     var databaseEntryConversations = [[ String : Any]]()
                     let updatedValue: [String:Any] = [
 
@@ -473,7 +463,7 @@ extension StorageService {
                         else {
                             let newConversationData: [String: Any] = [
                                 "id" : conversation,
-                                "other_user_id": otherUserId,
+                                "other_post_id": otherPostId,
                                 "name": name,
                                 "latest_message": updatedValue
                             ]
@@ -486,7 +476,7 @@ extension StorageService {
                         
                         let newConversationData: [String: Any] = [
                             "id" : conversation,
-                            "other_user_id": otherUserId,
+                            "other_post_id": otherPostId,
                             "name": name,
                             "latest_message": updatedValue
                         ]
@@ -495,7 +485,7 @@ extension StorageService {
                         ]
                     }
  
-                    strongSelf.database.child("users/\(currentId)/conversations").setValue(databaseEntryConversations, withCompletionBlock: { error, _ in
+                    strongSelf.database.child("items/\(currentPostId)/conversations").setValue(databaseEntryConversations, withCompletionBlock: { error, _ in
                         guard error == nil else {
                             completion(false)
                             return
@@ -504,7 +494,7 @@ extension StorageService {
                         // update latest message for recipient user
                         
                             
-                        strongSelf.database.child("users/\(otherUserId)/conversations").observeSingleEvent(of: .value, with: {snapshot in
+                        strongSelf.database.child("items/\(otherPostId)/conversations").observeSingleEvent(of: .value, with: {snapshot in
                             guard let currentName = Auth.auth().currentUser?.displayName else {
                                 return
                             }
@@ -541,7 +531,7 @@ extension StorageService {
                                     //failed to find in current collection
                                     let newConversationData: [String: Any] = [
                                         "id" : conversation,
-                                        "other_user_id": currentId,
+                                        "other_post_id": currentPostId,
                                         "name": currentName,
                                         "latest_message": updatedValue
                                     ]
@@ -555,7 +545,7 @@ extension StorageService {
                                 // current collection does not exist
                                 let newConversationData: [String: Any] = [
                                     "id" : conversation,
-                                    "other_user_id": currentUserId,
+                                    "other_post_id": currentPostId,
                                     "name": currentName,
                                     "latest_message": updatedValue
                                 ]
@@ -564,7 +554,7 @@ extension StorageService {
                                 ]
                             }
                         
-                            strongSelf.database.child("users/\(otherUserId)/conversations").setValue(databaseEntryConversations, withCompletionBlock: { error, _ in
+                            strongSelf.database.child("items/\(otherPostId)/conversations").setValue(databaseEntryConversations, withCompletionBlock: { error, _ in
                                     guard error == nil else {
                                         completion(false)
                                         return
@@ -643,16 +633,14 @@ extension StorageService {
     }
     
     
-    public func deleteConversation(conversationId: String, completion: @escaping (Bool) -> Void) {
-        guard let userId = Auth.auth().currentUser?.uid else {
-            return
-        }
+    public func deleteConversation(conversationId: String, currentPostId: String, completion: @escaping (Bool) -> Void) {
+
         print("Deleting conversation with id: \(conversationId)")
         
         // Get all conversations for current user
         //delete conversation with target id
         // reset those conversations for the user in database
-        let ref = database.child("users/\(userId)/conversations")
+        let ref = database.child("items/\(currentPostId)/conversations")
         ref.observeSingleEvent(of: .value, with: {snapshot in
             if var conversations = snapshot.value as? [[String: Any]] {
                 var positionToRemove = 0
@@ -683,21 +671,19 @@ extension StorageService {
     }
     
  
-    public func conversationExists(with targetRecipientId: String, completion: @escaping (Result<String, Error>) ->Void) {
-        guard let userID = Auth.auth().currentUser?.uid else {
-            return
-        }
-        database.child("users/\(targetRecipientId)/conversations").observeSingleEvent(of: .value, with: {snapshot in
-            guard let collection = snapshot.value as? [[String: Any]] else {
+    public func conversationExists(with targetPostId: String, postID: String ,completion: @escaping (Result<String, Error>) ->Void) {
+
+        database.child("items/\(targetPostId)/conversations").observeSingleEvent(of: .value, with: {snapshot in
+            guard let collection = snapshot.value as? [[String: Any]] else {              
                 completion(.failure(DatabaseErrors.failedToFetch))
                 return
             }
             
             if let conversation = collection.first(where: {
-                guard let targetSenderId = $0["other_user_id"] as? String else {
+                guard let targetSenderId = $0["other_post_id"] as? String else {
                     return false
                 }
-                return userID == targetSenderId
+                return postID == targetSenderId
             }) {
                 //get id
                 guard let id = conversation["id"] as? String else {
@@ -707,7 +693,6 @@ extension StorageService {
                 completion(.success(id))
                 return
             }
-            
             completion(.failure(DatabaseErrors.failedToFetch))
             return
             
@@ -719,5 +704,45 @@ extension StorageService {
         case failedToFetch
         case failedToGetDownloadURL
     }
-}
+    
+    // MARK: delete match
+    public func deleteMatch(otherPostId: String, currentPostId: String, completion: @escaping (Bool) -> Void) {
 
+        print("Deleting match between \(currentPostId) and \(otherPostId)")
+        
+        Api.Post.getPostInforSingleEvent(postID: currentPostId, onSuccess: {[weak self] (post) in
+            guard let currentUserId = post.userID else {
+                return
+            }
+            let ref = self?.database.child("users/\(currentUserId)/matches")
+            ref?.observeSingleEvent(of: .value, with: {snapshot in
+                if let matches = snapshot.value as? [String:Any] {
+                    for key in matches.keys {
+                        guard let match = matches[key] as? [String: Any] else {
+                            return
+                        }
+                        
+                        if let your_post = match["your_post"] as? String, let other_post = match["other_post"] as? String,
+                           your_post == currentPostId, other_post == otherPostId {
+                            print("found match to delete")
+                            guard let keyToRemove = key as? String else {
+                                return
+                            }
+                            ref?.child(keyToRemove).removeValue(completionBlock: { (error, refer) in
+                                if error != nil {
+                                    print("failed to remove")
+                                }
+                                else {
+                                    print("deleted match")
+                                }
+                            })
+                            
+                            break
+                        }
+                    }
+                }
+            })
+        })
+     
+    }
+}

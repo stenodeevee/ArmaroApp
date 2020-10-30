@@ -61,6 +61,8 @@ class SignUpViewController: UIViewController {
         setupPasswordTextField()
         setupSignUpButton()
         setupSignInButton()
+        
+        closeButton.tintColor = .label
     }
     
     

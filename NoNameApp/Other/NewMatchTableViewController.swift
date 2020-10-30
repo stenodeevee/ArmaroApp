@@ -11,8 +11,9 @@ import FirebaseAuth
 
 class NewMatchTableViewController: UITableViewController {
 
-    var matchesIDs : [String] = []
-    var userMatched: [User] = []
+    var otherMatchesIDs : [String] = []
+    var yourMatcheIDs: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -24,9 +25,14 @@ class NewMatchTableViewController: UITableViewController {
         tableView.tableFooterView = UIView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = "New Matches"
+        navigationItem.title = "Trades"
         
         let iconView = UIImageView(image: UIImage(named: "icon_top"))
         iconView.contentMode = .scaleAspectFit
@@ -35,34 +41,27 @@ class NewMatchTableViewController: UITableViewController {
     
     func findMatches() {
         
-        
         guard let currentId = Auth.auth().currentUser?.uid else {
             return
         }
-        
-        Ref().databaseActionForUser(uid: currentId).observeSingleEvent(of: .value, with: {snapshot in
-            guard let dict = snapshot.value as? [String:Bool] else {return}
-            for key in dict.keys {
-                if dict[key] == true {
-                    Ref().databaseActionForUser(uid: key).observeSingleEvent(of: .value, with: { snapshot in
-                        guard let dict2 = snapshot.value as? [String:Bool] else {return}
-                        if dict2.keys.contains(currentId), dict2[currentId] == true {
-                            //print(key)
-                            Api.User.getUserInforSingleEvent(uid: key, onSuccess: { (user) in
-                                //print(user.username)
-                                self.userMatched.append(user)
-                                print(self.userMatched.count)
-                                self.tableView.reloadData()
-                                
-                            })
-                            
-                            
-                        }
-                    })
+        Ref().databaseSpecificUser(uid: currentId).child("matches").observeSingleEvent(of: .value, with: {snapshot in
+            guard let matches = snapshot.value as? [String:Any] else {
+                print("No matches yet")
+                return
+            }
+            for key in matches.keys {
+                guard let match = matches[key] as? [String:Any] else {
+                    return
                 }
+                
+                let currentItem = match["your_post"] as! String
+                let otherItem = match["other_post"] as! String
+                
+                self.otherMatchesIDs.append(otherItem)
+                self.yourMatcheIDs.append(currentItem)
+                self.tableView.reloadData()
             }
         })
-          
     }
 
     
@@ -76,19 +75,19 @@ class NewMatchTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.userMatched.count
+        return self.otherMatchesIDs.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
        
-        let user = userMatched[indexPath.row]
-
- 
+        let otherUserPostID = otherMatchesIDs[indexPath.row]
+        let currentUserPostID = yourMatcheIDs[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "MatchesTableViewCell", for: indexPath) as! MatchesTableViewCell
         cell.controller = self
-        cell.loadData(user)
-        return cell
+        cell.loadData(currentUserPostID, otherUserPostID: otherUserPostID)
+        cell.selectionStyle = .none
+        return UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -96,35 +95,44 @@ class NewMatchTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = userMatched[indexPath.row]
-        guard let otherUserId = user.uid as? String else {
-            return
-        }
+        let otherUserPostID = otherMatchesIDs[indexPath.row]
+        let currentUserPostID = yourMatcheIDs[indexPath.row]
         
-        StorageService.shared.conversationExists(with: otherUserId, completion: { [weak self] result in
-            guard let strongSelf = self else {
-                return
-            }
-            
-            switch result {
-            case .success(let conversationId):
-                let vc = ChatsViewController(with: conversationId, otherUserId: otherUserId)
-                vc.isNewConversation = false
-                vc.title = user.username
-                //vc.otherUser = strongSelf.postedClothing[row]
-                vc.navigationItem.largeTitleDisplayMode = .never
-                strongSelf.navigationController?.pushViewController(vc, animated: true)
-                
-            case .failure(_):
-                let vc = ChatsViewController(with: nil, otherUserId: otherUserId)
-                vc.isNewConversation = true
-                vc.title = user.username
-                //vc.otherUser = strongSelf.postedClothing[row]
-                vc.navigationItem.largeTitleDisplayMode = .never
-                strongSelf.navigationController?.pushViewController(vc, animated: true)
-            }
-        })
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "ExchangeViewController") as! ExchangeViewController
+        vc.otherPostID = otherUserPostID
+        vc.yourPostID = currentUserPostID
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
-}
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            //
+            let otherUserPostID = otherMatchesIDs[indexPath.row]
+            let currentUserPostID = yourMatcheIDs[indexPath.row]
+            
+            tableView.beginUpdates()
+            self.otherMatchesIDs.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+            StorageService.shared.deleteMatch(otherPostId: otherUserPostID, currentPostId: currentUserPostID, completion: { success in
+                if !success {
+                    print("failed to delete for current user")
+                }
+            })
+            tableView.endUpdates()
+            
+            // delete it for other guy as well
+            StorageService.shared.deleteMatch(otherPostId: currentUserPostID, currentPostId: otherUserPostID, completion: { success in
+                if !success {
+                    print("failed to delete for other user")
+                }
+            })
+        }
+    }}
 
 

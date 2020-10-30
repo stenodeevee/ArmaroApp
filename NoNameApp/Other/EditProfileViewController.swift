@@ -44,7 +44,7 @@ final class EditProfileViewController: UIViewController {
         
         
         data.append([
-            SettingCellModel(title: "Edit sizes and profile picture") { [weak self] in
+            SettingCellModel(title: "Edit profile") { [weak self] in
                 self?.didTapEditSizes()
             },
             SettingCellModel(title: "Invite Friends") {[weak self ] in
@@ -74,7 +74,7 @@ final class EditProfileViewController: UIViewController {
     
     private func didTapEditSizes() {
         let vc = EditSizesViewController()
-        vc.title = "Edit Sizes and Profile Info"
+        vc.title = "Edit Profile"
         let navVC = UINavigationController(rootViewController: vc)
         navVC.modalPresentationStyle = .fullScreen
         present(navVC, animated: true)

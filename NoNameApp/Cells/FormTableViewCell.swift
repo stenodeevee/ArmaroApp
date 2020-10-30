@@ -50,6 +50,7 @@ class FormTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     public func configure(with model: EditSizeFormModel) {
+        self.model = model
         formLabel.text = model.label
         field.placeholder = model.placeholder
         field.text = model.value
@@ -74,15 +75,17 @@ class FormTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         model?.value = textField.text
+
         guard let model = model else {
             return true
         }
+        
+        
         delegate?.formTableViewCell(self, didUpdateField: model)
         textField.resignFirstResponder()
         return true
+ 
     }
-
-    
-    
 }

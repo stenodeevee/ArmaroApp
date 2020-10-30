@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 struct EditSizeFormModel {
     let label: String
@@ -50,6 +51,7 @@ final class EditSizesViewController: UIViewController, UITableViewDataSource {
                                           placeholder: "Enter \(label)...", value: nil )
             section1.append(model)
         }
+        models.append(section1)
         
         // gender, sizes
         let section2Labels = ["Gender","Shoe size","T-shirt size", "Pants size"]
@@ -59,6 +61,7 @@ final class EditSizesViewController: UIViewController, UITableViewDataSource {
                                           placeholder: "Enter \(label)...", value: nil )
             section2.append(model)
         }
+        models.append(section2)
     }
     
     // MARK: TableView
@@ -69,16 +72,14 @@ final class EditSizesViewController: UIViewController, UITableViewDataSource {
                                           width: view.bounds.width,
                                           height: view.bounds.height/4).integral)
         let size = header.bounds.height/1.5
-        let profilePhotoButton = UIButton(frame: CGRect(x: (view.bounds.width - size)/2, y: (view.bounds.height - size)/2, width: size, height: size).integral)
+        let profilePhotoButton = UIButton(frame: CGRect(x: (view.bounds.width - size)/2, y: (header.bounds.height - size)/2, width: size, height: size).integral)
         
         header.addSubview(profilePhotoButton)
         profilePhotoButton.layer.masksToBounds = true
         profilePhotoButton.layer.cornerRadius = size/2
         profilePhotoButton.tintColor = .label
-        
         profilePhotoButton.addTarget(self, action: #selector(didTapProfilePhotoButton), for: .touchUpInside)
-        profilePhotoButton.setBackgroundImage(UIImage(systemName: "person.circle"), for: .normal)
-        
+        profilePhotoButton.imageView?.loadImage(Auth.auth().currentUser!.photoURL!.absoluteString)
         profilePhotoButton.layer.borderWidth = 1
         profilePhotoButton.layer.borderColor = UIColor.secondarySystemBackground.cgColor
         
@@ -86,11 +87,10 @@ final class EditSizesViewController: UIViewController, UITableViewDataSource {
         return header
     }
     
-    @objc private func didTapProfilePhotoButton() {
-        
-    }
+
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        print(models.count)
         return models.count
     }
     
@@ -112,7 +112,7 @@ final class EditSizesViewController: UIViewController, UITableViewDataSource {
         guard section == 1 else {
             return nil
         }
-        return "Private Information"
+        return "Sizes Information"
         
     }
     
@@ -121,9 +121,15 @@ final class EditSizesViewController: UIViewController, UITableViewDataSource {
     
     // MARK: Action
     
+    @objc private func didTapProfilePhotoButton() {
+        
+    }
+    
     @objc private func didTapSave() {
         // Save info to Database
-        dismiss(animated: true, completion: nil)    }
+        dismiss(animated: true, completion: nil)
+        
+    }
     
     @objc private func didTapCancel() {
         dismiss(animated: true, completion: nil)
@@ -137,9 +143,11 @@ final class EditSizesViewController: UIViewController, UITableViewDataSource {
         actionSheet.addAction(UIAlertAction(title:"Choose from Library", style: .default, handler: {_ in
             
         }))
-        actionSheet.addAction(UIAlertAction(title:"Cancel", style: .cancel, handler: {_ in
-            
-        }))
+        actionSheet.addAction(UIAlertAction(title:"Cancel", style: .cancel, handler: nil))
+        
+        actionSheet.popoverPresentationController?.sourceView = view
+        actionSheet.popoverPresentationController?.sourceRect = view.bounds
+        
         present(actionSheet, animated: true)
     }
     
@@ -151,9 +159,11 @@ final class EditSizesViewController: UIViewController, UITableViewDataSource {
 
 extension EditSizesViewController: FormTableViewCellDelegate {
     func formTableViewCell(_ cell: FormTableViewCell, didUpdateField updatedModel: EditSizeFormModel) {
-        
+        print(updatedModel.value ?? "nil")
     }
     
+  
 
     
 }
+

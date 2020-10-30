@@ -93,7 +93,7 @@ class PostingViewController: UIViewController, UIImagePickerControllerDelegate, 
                                 "author": Auth.auth().currentUser!.displayName!,
                                 "description": self.finalCaption,
                                 "postID": key!] as [String : Any]
-                    let postFeed = ["\(key)" : feed]
+                    let postFeed = ["\(key!)" : feed]
                     
                     ref.child("items").updateChildValues(postFeed)
                     
@@ -102,17 +102,10 @@ class PostingViewController: UIViewController, UIImagePickerControllerDelegate, 
                     }
             })
         }
-        
-        
+       
         uploadTask.resume()
-        
-        
-
-    
         navigationController?.popViewControllers(viewsToPop: 2)
-            
-        
-        
+         
         
     }
 

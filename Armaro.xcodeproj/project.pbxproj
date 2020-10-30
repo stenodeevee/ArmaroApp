@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		243F02D716AC6758C8CFF1CE /* Pods_Armaro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF36A9C72E6C81C1FA1C6235 /* Pods_Armaro.framework */; };
+		6B1494D12536EBF300A872CF /* PostApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1494D02536EBF300A872CF /* PostApi.swift */; };
+		6B1494D5253739F800A872CF /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1494D4253739F800A872CF /* ExchangeViewController.swift */; };
+		6B1494D82537406E00A872CF /* ChatOrNotTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1494D72537406E00A872CF /* ChatOrNotTableViewCell.swift */; };
+		6B1494DB2537408200A872CF /* YourClothesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1494DA2537408200A872CF /* YourClothesTableViewCell.swift */; };
 		6B1757F5250A692700E02F73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1757F4250A692700E02F73 /* AppDelegate.swift */; };
 		6B1757F9250A692700E02F73 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1757F8250A692700E02F73 /* ViewController.swift */; };
 		6B1757FC250A692700E02F73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B1757FA250A692700E02F73 /* Main.storyboard */; };
 		6B1757FE250A692900E02F73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B1757FD250A692900E02F73 /* Assets.xcassets */; };
 		6B175801250A692900E02F73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B1757FF250A692900E02F73 /* LaunchScreen.storyboard */; };
-		6B1CD596252389E500390E3B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1CD595252389E500390E3B /* ChatViewController.swift */; };
 		6B24F017250E521E00DC2431 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B24F016250E521E00DC2431 /* GoogleService-Info.plist */; };
 		6B24F9B82535EB95000CFE19 /* otherUserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B24F9B72535EB95000CFE19 /* otherUserProfileViewController.swift */; };
 		6B24F9BB2535F0A7000CFE19 /* otherUserProfileCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B24F9BA2535F0A7000CFE19 /* otherUserProfileCollectionReusableView.swift */; };
@@ -34,12 +37,9 @@
 		6B3CE9B7250BBC8B00B2EACD /* SignInViewController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3CE9B6250BBC8B00B2EACD /* SignInViewController+UI.swift */; };
 		6B3CE9B9250BC0E900B2EACD /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3CE9B8250BC0E900B2EACD /* ForgotPasswordViewController.swift */; };
 		6B3CE9BB250BC11100B2EACD /* ForgotPasswordViewController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3CE9BA250BC11100B2EACD /* ForgotPasswordViewController+UI.swift */; };
-		6B447CD32510B9D700E3B1EC /* MessagesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B447CD22510B9D700E3B1EC /* MessagesTableViewController.swift */; };
-		6B47564C251A29A4001F910A /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B47564B251A29A4001F910A /* HomeTableViewController.swift */; };
 		6B47564F251A2C1F001F910A /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B47564E251A2C1F001F910A /* HomeTableViewCell.swift */; };
 		6B475655251B47E3001F910A /* SpecsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B475654251B47E3001F910A /* SpecsViewController.swift */; };
 		6B5227AF252B0F6A0026D017 /* ConversationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5227AE252B0F6A0026D017 /* ConversationsViewController.swift */; };
-		6B5227E1252B13830026D017 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5227E0252B13830026D017 /* ChatsViewController.swift */; };
 		6B5B5323250F8F9000705DE4 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5B5322250F8F9000705DE4 /* Api.swift */; };
 		6B5B5325250F8FE300705DE4 /* UserApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5B5324250F8FE300705DE4 /* UserApi.swift */; };
 		6B5B5327250F94CB00705DE4 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5B5326250F94CB00705DE4 /* StorageService.swift */; };
@@ -48,6 +48,7 @@
 		6B746D432518A68F0076D26F /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B746D422518A68F0076D26F /* Post.swift */; };
 		6B7907DD252E23F900E801AF /* ItemsAroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7907DC252E23F900E801AF /* ItemsAroundViewController.swift */; };
 		6B7907E1252E301400E801AF /* ItemsAroundCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7907E0252E301400E801AF /* ItemsAroundCollectionViewCell.swift */; };
+		6B7A27732546E43200CE4307 /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7A27722546E43200CE4307 /* Configs.swift */; };
 		6B8ADCBC251CC5D5007DA8A4 /* ProfileInfoHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8ADCBB251CC5D5007DA8A4 /* ProfileInfoHeaderCollectionReusableView.swift */; };
 		6B8ADCC4251CC6B8007DA8A4 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8ADCC3251CC6B8007DA8A4 /* PhotoCollectionViewCell.swift */; };
 		6B8ADCC8251CD0EC007DA8A4 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8ADCC7251CD0EC007DA8A4 /* ProfileViewController.swift */; };
@@ -58,8 +59,9 @@
 		6BAE56E92514E94A00034C52 /* SizeChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAE56E82514E94A00034C52 /* SizeChoiceViewController.swift */; };
 		6BAE56ED2514EB8300034C52 /* SizeChoiceViewController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAE56EC2514EB8300034C52 /* SizeChoiceViewController+UI.swift */; };
 		6BAE56F12514F37700034C52 /* PostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAE56F02514F37700034C52 /* PostingViewController.swift */; };
+		6BBEF81E253836BE00283C41 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEF81D253836BE00283C41 /* ChatViewController.swift */; };
+		6BBEF8212538379200283C41 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBEF8202538379200283C41 /* Messages.swift */; };
 		6BC7E157252B63F40067E703 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC7E156252B63F40067E703 /* ConversationTableViewCell.swift */; };
-		6BD2578C251E515100705B77 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD2578B251E515100705B77 /* HomeViewController.swift */; };
 		6BD25790251E55E600705B77 /* FeedPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD2578F251E55E600705B77 /* FeedPostTableViewCell.swift */; };
 		6BD25794251E57B300705B77 /* FeedPostHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD25793251E57B300705B77 /* FeedPostHeaderTableViewCell.swift */; };
 		6BD25797251E57DB00705B77 /* FeedPostActionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD25796251E57DB00705B77 /* FeedPostActionsTableViewCell.swift */; };
@@ -68,6 +70,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B1494D02536EBF300A872CF /* PostApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApi.swift; sourceTree = "<group>"; };
+		6B1494D4253739F800A872CF /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
+		6B1494D72537406E00A872CF /* ChatOrNotTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOrNotTableViewCell.swift; sourceTree = "<group>"; };
+		6B1494DA2537408200A872CF /* YourClothesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourClothesTableViewCell.swift; sourceTree = "<group>"; };
 		6B1757F1250A692700E02F73 /* Armaro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Armaro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B1757F4250A692700E02F73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B1757F8250A692700E02F73 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -75,7 +81,6 @@
 		6B1757FD250A692900E02F73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B175800250A692900E02F73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6B175802250A692900E02F73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6B1CD595252389E500390E3B /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		6B24F016250E521E00DC2431 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6B24F9B72535EB95000CFE19 /* otherUserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otherUserProfileViewController.swift; sourceTree = "<group>"; };
 		6B24F9BA2535F0A7000CFE19 /* otherUserProfileCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = otherUserProfileCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -96,12 +101,9 @@
 		6B3CE9B6250BBC8B00B2EACD /* SignInViewController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignInViewController+UI.swift"; sourceTree = "<group>"; };
 		6B3CE9B8250BC0E900B2EACD /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		6B3CE9BA250BC11100B2EACD /* ForgotPasswordViewController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ForgotPasswordViewController+UI.swift"; sourceTree = "<group>"; };
-		6B447CD22510B9D700E3B1EC /* MessagesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesTableViewController.swift; sourceTree = "<group>"; };
-		6B47564B251A29A4001F910A /* HomeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		6B47564E251A2C1F001F910A /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		6B475654251B47E3001F910A /* SpecsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecsViewController.swift; sourceTree = "<group>"; };
 		6B5227AE252B0F6A0026D017 /* ConversationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsViewController.swift; sourceTree = "<group>"; };
-		6B5227E0252B13830026D017 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		6B5B5322250F8F9000705DE4 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		6B5B5324250F8FE300705DE4 /* UserApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApi.swift; sourceTree = "<group>"; };
 		6B5B5326250F94CB00705DE4 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
@@ -110,6 +112,8 @@
 		6B746D422518A68F0076D26F /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		6B7907DC252E23F900E801AF /* ItemsAroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsAroundViewController.swift; sourceTree = "<group>"; };
 		6B7907E0252E301400E801AF /* ItemsAroundCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsAroundCollectionViewCell.swift; sourceTree = "<group>"; };
+		6B7A27702546E0D200CE4307 /* Armaro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Armaro.entitlements; sourceTree = "<group>"; };
+		6B7A27722546E43200CE4307 /* Configs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		6B8ADCBB251CC5D5007DA8A4 /* ProfileInfoHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		6B8ADCC3251CC6B8007DA8A4 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		6B8ADCC7251CD0EC007DA8A4 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -120,8 +124,9 @@
 		6BAE56E82514E94A00034C52 /* SizeChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeChoiceViewController.swift; sourceTree = "<group>"; };
 		6BAE56EC2514EB8300034C52 /* SizeChoiceViewController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SizeChoiceViewController+UI.swift"; sourceTree = "<group>"; };
 		6BAE56F02514F37700034C52 /* PostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingViewController.swift; sourceTree = "<group>"; };
+		6BBEF81D253836BE00283C41 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		6BBEF8202538379200283C41 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		6BC7E156252B63F40067E703 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
-		6BD2578B251E515100705B77 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6BD2578F251E55E600705B77 /* FeedPostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostTableViewCell.swift; sourceTree = "<group>"; };
 		6BD25793251E57B300705B77 /* FeedPostHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		6BD25796251E57DB00705B77 /* FeedPostActionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPostActionsTableViewCell.swift; sourceTree = "<group>"; };
@@ -147,6 +152,7 @@
 		6B1757E8250A692700E02F73 = {
 			isa = PBXGroup;
 			children = (
+				6B7A27702546E0D200CE4307 /* Armaro.entitlements */,
 				6B1757F3250A692700E02F73 /* NoNameApp */,
 				6B1757F2250A692700E02F73 /* Products */,
 				A28E7A64C6CC39B87F3C5949 /* Pods */,
@@ -174,14 +180,16 @@
 				6BD2578E251E552100705B77 /* Cells */,
 				6B8ADCBE251CC636007DA8A4 /* Profile Feed */,
 				6B1CD5942523898600390E3B /* Other */,
-				6BEF080C2535A6E0008EB1F4 /* Api */,
 				6B1757FD250A692900E02F73 /* Assets.xcassets */,
 				6B1757FF250A692900E02F73 /* LaunchScreen.storyboard */,
-				6B5B5322250F8F9000705DE4 /* Api.swift */,
 				6B5B5328250F989A00705DE4 /* Ref.swift */,
 				6B1757F4250A692700E02F73 /* AppDelegate.swift */,
 				6B31AD4B25305059006B732E /* Extension.swift */,
+				6BBEF8202538379200283C41 /* Messages.swift */,
 				6B31AD5F2530BA73006B732E /* User.swift */,
+				6B5B5322250F8F9000705DE4 /* Api.swift */,
+				6B1494D02536EBF300A872CF /* PostApi.swift */,
+				6B7A27722546E43200CE4307 /* Configs.swift */,
 				6B746D422518A68F0076D26F /* Post.swift */,
 				6B5B5324250F8FE300705DE4 /* UserApi.swift */,
 				6B5B5326250F94CB00705DE4 /* StorageService.swift */,
@@ -194,14 +202,10 @@
 		6B1CD5932523892C00390E3B /* Old */ = {
 			isa = PBXGroup;
 			children = (
-				6B1CD595252389E500390E3B /* ChatViewController.swift */,
-				6B447CD22510B9D700E3B1EC /* MessagesTableViewController.swift */,
 				6BAE56E82514E94A00034C52 /* SizeChoiceViewController.swift */,
 				6BAE56EC2514EB8300034C52 /* SizeChoiceViewController+UI.swift */,
 				6BAE56E12514E71300034C52 /* GenderViewController.swift */,
 				6BAE56E52514E77100034C52 /* GenderViewController+UI.swift */,
-				6BD2578B251E515100705B77 /* HomeViewController.swift */,
-				6B47564B251A29A4001F910A /* HomeTableViewController.swift */,
 				6B7907DC252E23F900E801AF /* ItemsAroundViewController.swift */,
 				6B7907E0252E301400E801AF /* ItemsAroundCollectionViewCell.swift */,
 				6B47564E251A2C1F001F910A /* HomeTableViewCell.swift */,
@@ -220,7 +224,8 @@
 				6B475654251B47E3001F910A /* SpecsViewController.swift */,
 				6B31AD4825304373006B732E /* DetailViewController.swift */,
 				6B31AD5C2530B11A006B732E /* NewMatchTableViewController.swift */,
-				6B5227E0252B13830026D017 /* ChatsViewController.swift */,
+				6BBEF81D253836BE00283C41 /* ChatViewController.swift */,
+				6B1494D4253739F800A872CF /* ExchangeViewController.swift */,
 				6B2C432A252CAD080030A4EC /* PhotoViewController.swift */,
 			);
 			path = Other;
@@ -294,17 +299,12 @@
 				6B5D9A602521D52B00F2F2F8 /* FormTableViewCell.swift */,
 				6BC7E156252B63F40067E703 /* ConversationTableViewCell.swift */,
 				6B31AD662530D39B006B732E /* MatchesTableViewCell.swift */,
+				6B1494D72537406E00A872CF /* ChatOrNotTableViewCell.swift */,
+				6B1494DA2537408200A872CF /* YourClothesTableViewCell.swift */,
 				6B31AD4F25305D19006B732E /* MapTableViewCell.swift */,
 				6B5D9A6B2521E6E200F2F2F8 /* Feed and Post */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		6BEF080C2535A6E0008EB1F4 /* Api */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Api;
 			sourceTree = "<group>";
 		};
 		A28E7A64C6CC39B87F3C5949 /* Pods */ = {
@@ -445,28 +445,28 @@
 				6B8ADCCE251CF324007DA8A4 /* EditProfileViewController.swift in Sources */,
 				6B5D9A612521D52B00F2F2F8 /* FormTableViewCell.swift in Sources */,
 				6B8ADCBC251CC5D5007DA8A4 /* ProfileInfoHeaderCollectionReusableView.swift in Sources */,
-				6B47564C251A29A4001F910A /* HomeTableViewController.swift in Sources */,
 				6B3CE9B7250BBC8B00B2EACD /* SignInViewController+UI.swift in Sources */,
 				6B746D432518A68F0076D26F /* Post.swift in Sources */,
 				6B31AD672530D39B006B732E /* MatchesTableViewCell.swift in Sources */,
 				6BD2579E251E5F2A00705B77 /* EditSizesViewController.swift in Sources */,
-				6BD2578C251E515100705B77 /* HomeViewController.swift in Sources */,
 				6BAE56ED2514EB8300034C52 /* SizeChoiceViewController+UI.swift in Sources */,
 				6B5227AF252B0F6A0026D017 /* ConversationsViewController.swift in Sources */,
 				6B5B5329250F989A00705DE4 /* Ref.swift in Sources */,
+				6BBEF81E253836BE00283C41 /* ChatViewController.swift in Sources */,
 				6B31AD5025305D19006B732E /* MapTableViewCell.swift in Sources */,
 				6B8ADCC8251CD0EC007DA8A4 /* ProfileViewController.swift in Sources */,
 				6BD25797251E57DB00705B77 /* FeedPostActionsTableViewCell.swift in Sources */,
+				6BBEF8212538379200283C41 /* Messages.swift in Sources */,
 				6BAE56F12514F37700034C52 /* PostingViewController.swift in Sources */,
 				6B7907E1252E301400E801AF /* ItemsAroundCollectionViewCell.swift in Sources */,
 				6B31AD4C25305059006B732E /* Extension.swift in Sources */,
 				6B24F9BB2535F0A7000CFE19 /* otherUserProfileCollectionReusableView.swift in Sources */,
 				6BD25794251E57B300705B77 /* FeedPostHeaderTableViewCell.swift in Sources */,
 				6B3CE9B5250BBAFF00B2EACD /* SignInViewController.swift in Sources */,
+				6B1494D82537406E00A872CF /* ChatOrNotTableViewCell.swift in Sources */,
 				6B3CE9B3250BABF000B2EACD /* SignUpViewController+UI.swift in Sources */,
 				6B7907DD252E23F900E801AF /* ItemsAroundViewController.swift in Sources */,
 				6B47564F251A2C1F001F910A /* HomeTableViewCell.swift in Sources */,
-				6B447CD32510B9D700E3B1EC /* MessagesTableViewController.swift in Sources */,
 				6B1757F9250A692700E02F73 /* ViewController.swift in Sources */,
 				6B8ADCC4251CC6B8007DA8A4 /* PhotoCollectionViewCell.swift in Sources */,
 				6B3CE9BB250BC11100B2EACD /* ForgotPasswordViewController+UI.swift in Sources */,
@@ -476,7 +476,9 @@
 				6B5B5323250F8F9000705DE4 /* Api.swift in Sources */,
 				6BD25790251E55E600705B77 /* FeedPostTableViewCell.swift in Sources */,
 				6B1757F5250A692700E02F73 /* AppDelegate.swift in Sources */,
+				6B7A27732546E43200CE4307 /* Configs.swift in Sources */,
 				6B5B5327250F94CB00705DE4 /* StorageService.swift in Sources */,
+				6B1494DB2537408200A872CF /* YourClothesTableViewCell.swift in Sources */,
 				6B3CE9B9250BC0E900B2EACD /* ForgotPasswordViewController.swift in Sources */,
 				6B475655251B47E3001F910A /* SpecsViewController.swift in Sources */,
 				6B2C432B252CAD080030A4EC /* PhotoViewController.swift in Sources */,
@@ -489,9 +491,9 @@
 				6BAE56E62514E77100034C52 /* GenderViewController+UI.swift in Sources */,
 				6BAE56E22514E71300034C52 /* GenderViewController.swift in Sources */,
 				6BC7E157252B63F40067E703 /* ConversationTableViewCell.swift in Sources */,
-				6B1CD596252389E500390E3B /* ChatViewController.swift in Sources */,
-				6B5227E1252B13830026D017 /* ChatsViewController.swift in Sources */,
+				6B1494D5253739F800A872CF /* ExchangeViewController.swift in Sources */,
 				6B31AD5D2530B11A006B732E /* NewMatchTableViewController.swift in Sources */,
+				6B1494D12536EBF300A872CF /* PostApi.swift in Sources */,
 				6BAE56E92514E94A00034C52 /* SizeChoiceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -639,10 +641,11 @@
 			baseConfigurationReference = 8DF589C7734905CF0CFDAE06 /* Pods-Armaro.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Armaro.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LGY4J5K28W;
 				INFOPLIST_FILE = NoNameApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -659,10 +662,11 @@
 			baseConfigurationReference = EEC7F6482301AE11A7E36664 /* Pods-Armaro.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Armaro.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LGY4J5K28W;
 				INFOPLIST_FILE = NoNameApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -22,7 +22,7 @@ class ForgotPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        closeButton.tintColor = .label
         setupUI()
 
     }

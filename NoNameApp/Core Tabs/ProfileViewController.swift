@@ -24,7 +24,7 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         
-        fetchUsersPost()
+        //fetchUsersPost()
         
         
         view.backgroundColor = .systemBackground
@@ -62,11 +62,19 @@ final class ProfileViewController: UIViewController {
         collectionView?.frame = view.bounds
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchUsersPost()
+    }
+    
     func fetchUsersPost() {
-
+        
+        self.userPosts.removeAll()
         let ref = Database.database().reference()
         ref.child("items").queryOrderedByKey().observeSingleEvent(of: .value, with: { [weak self] (snap) in
-            let postsSnap = snap.value as! [String: AnyObject]
+            guard let postsSnap = snap.value as? [String: AnyObject] else {
+                return
+            }
             for (_,items) in postsSnap {
             if let userID = items["userID"] as? String {
                 if userID == Auth.auth().currentUser?.uid {

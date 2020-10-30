@@ -15,7 +15,11 @@ import FirebaseStorage
 
 class UserApi {
        
-        
+
+    var currentUserId: String {
+        return Auth.auth().currentUser != nil ? Auth.auth().currentUser!.uid : ""
+    }
+    
             
     
     func getUserInforSingleEvent(uid: String, onSuccess: @escaping(UserCompletion)) {
@@ -29,6 +33,7 @@ class UserApi {
         }
     }
     
+
     
     
     func signIn(email: String, passoword: String, onSuccess: @escaping() -> Void, onError: @escaping(_ errorMessage: String) -> Void) {
@@ -118,8 +123,10 @@ class UserApi {
     
     
     func logOut() {
+        let uid = Api.User.currentUserId
         do {
             try Auth.auth().signOut()
+            Messaging.messaging().unsubscribe(fromTopic: uid)
             
         } catch {
             
@@ -134,3 +141,4 @@ class UserApi {
 }
 
 typealias UserCompletion = (User) -> Void
+

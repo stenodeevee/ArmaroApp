@@ -12,7 +12,7 @@ extension ForgotPasswordViewController  {
     
     func setupRetrievePassword() {
         
-        retrievePsswordButton.layer.borderColor = UIColor.black.cgColor
+        retrievePsswordButton.layer.borderColor = UIColor.label.cgColor
         retrievePsswordButton.layer.borderWidth = 1.0
         retrievePsswordButton.setTitle("Reset Password", for: UIControl.State.normal)
         retrievePsswordButton.setTitleColor(.white, for: UIControl.State.normal)

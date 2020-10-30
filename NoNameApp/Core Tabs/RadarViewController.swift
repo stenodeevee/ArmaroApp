@@ -138,48 +138,24 @@ class RadarViewController: UIViewController {
         guard let currentId = Auth.auth().currentUser?.uid else {
             return
         }
-        guard let otherId = card.post.userID as? String else {
+        guard let postId = card.post.postID as? String else {
             return
         }
-
         
-        Ref().databaseActionForUser(uid: currentId).observeSingleEvent(of: .value, with: {snapshot in
-            if let userActions = snapshot.value as? [String:Bool] {
-                guard let opinion = userActions["\(otherId)"] else {
-                    // first action with THIS user
-                    Ref().databaseActionForUser(uid: currentId).updateChildValues([otherId: like], withCompletionBlock: {(error, ref) in
-                        if error == nil, like == true {
-                            // check if match {send push notification}
-                            self.checkIfMatchFor(card:card)
-                        }
-                    })
-                    return
-                }
-                
-                // HAS ALREADY LIKED OR DISLIKED something from this user
-                let newlike = like || opinion
-                Ref().databaseActionForUser(uid: currentId).updateChildValues([otherId: newlike], withCompletionBlock: {(error, ref) in
-                    if error == nil, newlike == true, opinion == false {
-                        // User was never liked before
-                        // check if match {send push notification}
-                        self.checkIfMatchFor(card:card)
-                    }
-                })
-            }
-            else {
-                // FIRST ACTION EVER
-                Ref().databaseActionForUser(uid: currentId).updateChildValues([otherId: like], withCompletionBlock: {(error, ref) in
-                    if error == nil, like == true {
-                        // check if match {send push notification}
-                        self.checkIfMatchFor(card:card)
-                    }
-                })
+        Ref().databaseActionForUser(uid: currentId).updateChildValues([postId: like], withCompletionBlock: {(error, ref) in
+            if error == nil, like == true {
+                // check if match {send push notification}
+                self.checkIfMatchFor(card:card)
             }
         })
+        
     }
     
     func checkIfMatchFor(card: Card) {
         guard let otherId = card.post.userID as? String else {
+            return
+        }
+        guard let otherPostID = card.post.postID as? String else {
             return
         }
         guard let currentId = Auth.auth().currentUser?.uid else {
@@ -187,8 +163,51 @@ class RadarViewController: UIViewController {
         }
         Ref().databaseActionForUser(uid: otherId).observeSingleEvent(of: .value, with: {snapshot in
             guard let dict = snapshot.value as? [String:Bool] else {return}
-            if dict.keys.contains(currentId), dict[currentId] == true {
-                print("It's a match")
+            for key in dict.keys {
+                if dict[key] == true {
+                //print("postID that other user has interacted with:", key)
+                    Api.Post.getPostInforSingleEvent(postID: key, onSuccess: { (post) in
+                        if post.userID == currentId {
+                            //print("match")
+                            
+                            sendRequestNotification(isMatch: true, fromUser: post, toUser: card.post, message: "Tap to see trade", convId: "", badge: 1)
+                            
+                            sendRequestNotification(isMatch: true, fromUser: card.post, toUser: post, message: "Tap to see trade", convId: "", badge: 1)
+                            
+                            
+                            //create matches in firebase storage for current user and other user
+                            guard let currentPostID = post.postID as? String else {
+                                return
+                            }
+                            
+                            
+                            /// Update match values
+                            let id_current_match : String = "\(currentPostID)_\(otherPostID)"
+                            
+                            let currentMatch: [String: Any] = [
+                                
+                                "your_post" : currentPostID,
+                                "other_post": otherPostID
+                            ]
+                            
+                            Ref().databaseRoot.child("users/\(currentId)/matches").child("\(id_current_match)").updateChildValues(currentMatch)
+                            
+                            /// Update match values for other user as well
+                            let id_other_match : String = "\(otherPostID)_\(currentPostID)"
+                            
+                            let otherMatch: [String: Any] = [
+                                
+                                "your_post" : otherPostID,
+                                "other_post": currentPostID
+                            ]
+                            
+                            Ref().databaseRoot.child("users/\(otherId)/matches").child("\(id_other_match)").updateChildValues(otherMatch)
+                            
+                                                        
+                            
+                        }
+                    })
+                }
             }
         })
     }

@@ -14,15 +14,27 @@ class ConversationTableViewCell: UITableViewCell {
     
     static let identifier = "ConversationTableViewCell"
     
-    private let userImageView: UIImageView = {
+    private let currentItemImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 50
+        imageView.layer.cornerRadius = 40
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.systemGreen.cgColor
         imageView.layer.masksToBounds = true
         return imageView
     }()
     
-    private let usernameLabel: UILabel = {
+    private let otherItemImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 40
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.systemRed.cgColor
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+    
+    private let forLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 21, weight: .semibold)
         return label
@@ -38,9 +50,11 @@ class ConversationTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(userImageView)
-        contentView.addSubview(usernameLabel)
-        contentView.addSubview(userMessageLabel)    }
+        contentView.addSubview(currentItemImageView)
+        contentView.addSubview(otherItemImageView)
+        contentView.addSubview(forLabel)
+        contentView.addSubview(userMessageLabel)
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -49,23 +63,32 @@ class ConversationTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
  
-        userImageView.frame = CGRect(x: 10, y: 10, width: 100, height: 100)
-        usernameLabel.frame = CGRect(x: 120, y: 10, width: contentView.bounds.width - 20 - userImageView.bounds.width, height: (contentView.bounds.height-20)/2)
-        userMessageLabel.frame = CGRect(x: 120, y: 20+(contentView.bounds.height-20)/2, width: contentView.bounds.width - 20 - userImageView.bounds.width, height: (contentView.bounds.height-20)/2)
+        currentItemImageView.frame = CGRect(x: 10, y: 10, width: 80, height: 80)
+        forLabel.frame = CGRect(x: 100, y: 10, width: 30, height: (contentView.bounds.height-20))
+        otherItemImageView.frame = CGRect(x: 130, y: 10, width: 80, height: 80)
+        
+        userMessageLabel.frame = CGRect(x: 220, y: 10, width: contentView.bounds.width - 230, height: (contentView.bounds.height-20))
     }
     
     public func configure(with model: Conversation) {
         self.userMessageLabel.text = model.latestMessage.text
-        self.usernameLabel.text = model.name
+        self.forLabel.text = "for"
         
-        
-        Ref().storageProfile.child(model.otherUserId).downloadURL(completion: {(url, error) in
-            let photoUrl = url?.absoluteString
-            
+        Api.Post.getPostInforSingleEvent(postID: model.otherPostId, onSuccess: {[weak self] (post) in
+            let photo = post.pathToImage
             DispatchQueue.main.async {
-                self.userImageView.loadImage(photoUrl!)
+                self?.otherItemImageView.loadImage(photo)
             }
         })
+        
+        
+        Api.Post.getPostInforSingleEvent(postID: model.currentPostId, onSuccess: {[weak self] (post) in
+            let photo = post.pathToImage
+            DispatchQueue.main.async {
+                self?.currentItemImageView.loadImage(photo)
+            }
+        })
+        
     }
 
 }

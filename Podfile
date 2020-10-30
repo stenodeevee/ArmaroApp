@@ -18,7 +18,7 @@ target 'Armaro' do
   pod 'Firebase/Core'
   pod 'ProgressHUD'
   pod 'SDWebImage'
-  
+  pod 'Firebase/Messaging'
   pod 'MessageKit'
   pod 'RealmSwift'
   pod 'JGProgressHUD'

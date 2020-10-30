@@ -1,8 +1,8 @@
 //
-//  ChatsViewController.swift
+//  ChatViewController.swift
 //  Armaro
 //
-//  Created by ESTEFANO on 05/10/20.
+//  Created by ESTEFANO on 15/10/20.
 //  Copyright © 2020 RSL. All rights reserved.
 //
 
@@ -12,68 +12,23 @@ import FirebaseAuth
 import SDWebImage
 import AVKit
 import AVFoundation
-
 import InputBarAccessoryView
 
-struct Message: MessageType {
-    public var sender: SenderType
-    public var messageId: String
-    public var sentDate: Date
-    public var kind: MessageKind
+
+
+class ChatViewController: MessagesViewController {
     
-}
-
-extension MessageKind {
-    var messageKindString: String {
-        switch self {
-        
-        case .text(_):
-            return "text"
-        case .attributedText(_):
-            return "attr text"
-        case .photo(_):
-            return "photo"
-        case .video(_):
-            return "video"
-        case .location(_):
-            return "location"
-        case .emoji(_):
-            return "emoji"
-        case .audio(_):
-            return "audio"
-        case .contact(_):
-            return "contact"
-        case .linkPreview(_):
-            return "Link preview"
-        case .custom(_):
-            return "custom"
-        }
-    }
-}
-
-struct Sender: SenderType {
-    public var senderId: String
-    public var displayName: String
-    public var photoURL: String
     
-}
+    var isNewConversation = false
+    private var conversationId: String!
+    private var otherPostId: String!
+    private var currentPostId: String!
+    private var senderPhotoUrl: URL!
+    private var otherUserPhotoUrl: URL!
 
-struct Media: MediaItem {
-    var url: URL?
-    var image: UIImage?
-    var placeholderImage: UIImage
-    var size: CGSize
-}
-
-
-class ChatsViewController: MessagesViewController {
-    
-    private var senderPhotoUrl: URL?
-    private var otherUserPhotoUrl: URL?
-    
-    public var isNewConversation = false
-    private var conversationId: String?
-    private let otherUserId: String?
+    var senderName: String!
+    var senderPhoto: String!
+    var otherPhoto: String!
     
     public static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -84,18 +39,18 @@ class ChatsViewController: MessagesViewController {
         
     }()
     
-    //public var otherUser: Post?
-    
-        
-    
     private var messages = [Message]()
     
     private var selfSender: Sender? {
-        guard let uid = Auth.auth().currentUser?.uid else {
+        guard let uid = currentPostId,
+              let name = senderName,
+              let photo = senderPhoto else {
             return nil
         }
-        return Sender(senderId: uid, displayName: Auth.auth().currentUser!.displayName!, photoURL: Auth.auth().currentUser!.photoURL!.absoluteString)
-
+        
+        
+        return Sender(senderId: uid, displayName: name, photoURL: photo)
+        
     }
     
     private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
@@ -122,9 +77,10 @@ class ChatsViewController: MessagesViewController {
         })
     }
     
-    init(with id: String?, otherUserId: String?) {
+    init(with id: String?, currentPostId: String?, otherPostId: String?) {
+        self.currentPostId = currentPostId
         self.conversationId = id
-        self.otherUserId = otherUserId
+        self.otherPostId = otherPostId
         super.init(nibName: nil, bundle: nil)
 
     }
@@ -133,13 +89,9 @@ class ChatsViewController: MessagesViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
-        
-
         
         
         messagesCollectionView.messagesDataSource = self
@@ -151,6 +103,8 @@ class ChatsViewController: MessagesViewController {
         
     }
     
+    
+    // MARK: InputButton
     private func setupInputButton() {
         let button = InputBarButtonItem()
         button.setSize(CGSize(width: 36, height: 36), animated: false)
@@ -275,19 +229,16 @@ class ChatsViewController: MessagesViewController {
             listenForMessages(id: conversation_id, shouldScrollToBottom: true)        }
         
     }
-    
-
-
-
 }
 
-extension ChatsViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
+extension ChatViewController: MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate {
+    
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageType {
         return messages[indexPath.section]
     }
     
     func numberOfSections(in messagesCollectionView: MessagesCollectionView) -> Int {
-        
+        print(messages.count)
         return messages.count
     }
     
@@ -324,84 +275,23 @@ extension ChatsViewController: MessagesDataSource, MessagesLayoutDelegate, Messa
             return .systemGreen
         }
         
-        return .secondarySystemBackground
+        return .systemGray6
     }
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         let sender = message.sender
         if sender.senderId == selfSender?.senderId {
             //show our image
-            if let currentUserURL = self.senderPhotoUrl {
-                avatarView.sd_setImage(with: currentUserURL, completed: nil)
-            }
-            else {
-                //fetch URL
-                // path is profile/userId
-                let path = "profile/\(sender.senderId)"
-                StorageService.shared.downloadURL(for: path, completion: {[weak self] result in
-                    switch result {
-                    case .success(let url):
-                        self?.senderPhotoUrl = url
-                        DispatchQueue.main.async {
-                            avatarView.sd_setImage(with: url, completed: nil)
-                        }
-
-                    case .failure(let error):
-                        print("\(error)")
-                    }
-                    
-                })
-            }
+            avatarView.loadImage(senderPhoto)
         }
         else {
-            // show other user image
-            if let otherUserURL = self.otherUserPhotoUrl {
-                avatarView.sd_setImage(with: otherUserURL, completed: nil)
-            }
-            else {
-                //fetch URL
-                let path = "profile/\(sender.senderId)"
-                StorageService.shared.downloadURL(for: path, completion: {[weak self] result in
-                    switch result {
-                    case .success(let url):
-                        self?.otherUserPhotoUrl = url
-                        DispatchQueue.main.async {
-                            avatarView.sd_setImage(with: url, completed: nil)
-                        }
-
-                    case .failure(let error):
-                        print("\(error)")
-                    }
-                    
-                })
-                
-            }
-            
+            avatarView.loadImage(otherPhoto)
         }
     }
-     
 }
 
-extension ChatsViewController: MessageCellDelegate {
-    func didTapAvatar(in cell: MessageCollectionViewCell) {
-        guard let indexPath = messagesCollectionView.indexPath(for: cell) else {
-            return
-        }
-        let message = messages[indexPath.section]
-        if message.sender.senderId != self.otherUserId {
-            // tapped the current avatar
-        }
-        else {
-            // tapped the other user
-            print(self.otherUserId)
-            let vc = otherUserProfileViewController()
-            vc.navigationItem.largeTitleDisplayMode = .never
-            vc.otherUserId = self.otherUserId as? String
-            navigationController?.pushViewController(vc, animated: true)
-        }
-        
-    }
-    
+// MARK: Extension for Color and Tapping
+extension ChatViewController: MessageCellDelegate {
     func didTapImage(in cell: MessageCollectionViewCell) {
         
         guard let indexPath = messagesCollectionView.indexPath(for: cell) else {
@@ -431,12 +321,105 @@ extension ChatsViewController: MessageCellDelegate {
             break
         }
     }
+}
     
+    
+
+// MARK: Extensions for Input Button
+extension ChatViewController: InputBarAccessoryViewDelegate {
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        
+        
+        
+        guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
+              let selfSender = self.selfSender,
+              let messageId = createMessageId() else {
+            
+            print(!text.replacingOccurrences(of: " ", with: "").isEmpty)
+            return
+        }
+        
+        print("sending: \(text)")
+        handleNotification(fromUid: self.currentPostId, message: text)
+
+        // send message to DB
+        let mmessage = Message(sender: selfSender,
+                               messageId: messageId,
+                               sentDate: Date(),
+                               kind: .text(text))
+        
+        if isNewConversation{
+            guard let otherPostId = otherPostId,
+                  let currentPostId = currentPostId else {
+                return
+            }
+            
+            
+            StorageService.shared.createNewConversation(with: otherPostId, currentPostId: currentPostId ,nname: self.title ?? "User" , firstMessage: mmessage, completion: { [weak self] success in
+                if success {
+                    print("create new conversation and message sent")
+                    self?.isNewConversation = false
+                    let newConversationId = "conversation_\(mmessage.messageId)"
+                    self?.conversationId = newConversationId
+                    self?.listenForMessages(id: newConversationId, shouldScrollToBottom: true)
+                    self?.messageInputBar.inputTextView.text = nil
+                }
+                else {
+                    print("not sent")
+                }
+            })
+            
+        }
+        else {
+                        
+            guard let conversationId = conversationId,
+                  let currentPostId = currentPostId,
+                  let name = self.title,
+                  let otherPostId = otherPostId else {
+                return
+            }
+            StorageService.shared.sendMessage(to: conversationId, otherPostId: otherPostId, currentPostId: currentPostId, name: name, newMessage: mmessage, completion: { [weak self] success in
+                
+                if success {
+                    print("additional message sent")
+                    self?.messageInputBar.inputTextView.text = nil
+                }
+                else {
+                    print("failed to send additional message")
+                }
+            })
+        }
+    }
+    
+    func handleNotification(fromUid: String, message: String) {
+        Api.Post.getPostInforSingleEvent(postID: fromUid, onSuccess: { (post) in
+            Api.Post.getPostInforSingleEvent(postID: self.otherPostId, onSuccess: {(otherpost) in
+                sendRequestNotification(fromUser: post, toUser: otherpost, message: message, convId: self.conversationId ,badge: 1)
+            })
+            
+        })
+    }
+    
+    private func createMessageId() -> String? {
+        // date, otherUserEmail, senderEmail
+        
+        guard let currentPostId = currentPostId,
+              let otherPostId = otherPostId else {
+            
+            return nil
+        }
+        
+        let dateString = Self.dateFormatter.string(from:Date())
+        let newIdentifier = "\(otherPostId)_\(currentPostId)_\(dateString)"
+        //print("create message id: \(newIdentifier)")
+        return newIdentifier
+    }
     
 }
 
+// MARK: Extension for PICKER
 
-extension ChatsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
@@ -448,7 +431,8 @@ extension ChatsViewController: UIImagePickerControllerDelegate, UINavigationCont
         picker.dismiss(animated: true, completion: nil)
         guard let conversationId = self.conversationId,
               let name = self.title,
-              let otherUserId = self.otherUserId,
+              let otherPostId = self.otherPostId,
+              let currentPostId = self.currentPostId,
               let selfSender = selfSender,
               let messageId = createMessageId() else {
             return
@@ -483,7 +467,7 @@ extension ChatsViewController: UIImagePickerControllerDelegate, UINavigationCont
                                            sentDate: Date(),
                                            kind: .photo(media) )
                     
-                    StorageService.shared.sendMessage(to: conversationId, otherUserId: otherUserId, name: name, newMessage: mmessage, completion: {success in
+                    StorageService.shared.sendMessage(to: conversationId, otherPostId: otherPostId, currentPostId: currentPostId ,name: name, newMessage: mmessage, completion: {success in
                         if success {
                             print("sent photo message")
                         }
@@ -530,7 +514,7 @@ extension ChatsViewController: UIImagePickerControllerDelegate, UINavigationCont
                                            sentDate: Date(),
                                            kind: .video(media) )
                     
-                    StorageService.shared.sendMessage(to: conversationId, otherUserId: otherUserId, name: name, newMessage: mmessage, completion: {success in
+                    StorageService.shared.sendMessage(to: conversationId, otherPostId: otherPostId, currentPostId: currentPostId, name: name, newMessage: mmessage, completion: {success in
                         if success {
                             print("sent video message")
                         }
@@ -543,90 +527,8 @@ extension ChatsViewController: UIImagePickerControllerDelegate, UINavigationCont
                 case .failure(let error):
                     print("message video upload error: \(error)")
                 }
-            })        }
-           
-        
-        
-        
-        
-
-        // send message
-    }
-}
-
-
-extension ChatsViewController: InputBarAccessoryViewDelegate {
-    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        
-        guard !text.replacingOccurrences(of: " ", with: "").isEmpty,
-              let selfSender = self.selfSender,
-              let messageId = createMessageId() else {
-            
-            print(!text.replacingOccurrences(of: " ", with: "").isEmpty)
-            return
-        }
-        
-        print("sending: \(text)")
-        
-        // send message to DB
-        let mmessage = Message(sender: selfSender,
-                               messageId: messageId,
-                               sentDate: Date(),
-                               kind: .text(text))
-        
-        if isNewConversation{
-            guard let otherUserId = otherUserId else {
-                return
-            }
-            
-            StorageService.shared.createNewConversation(with: otherUserId, nname: self.title ?? "User" , firstMessage: mmessage, completion: { [weak self] success in
-                if success {
-                    print("create new conversation and message sent")
-                    self?.isNewConversation = false
-                    let newConversationId = "conversation_\(mmessage.messageId)"
-                    self?.conversationId = newConversationId
-                    self?.listenForMessages(id: newConversationId, shouldScrollToBottom: true)
-                    self?.messageInputBar.inputTextView.text = nil
-                }
-                else {
-                    print("not sent")
-                }
             })
             
         }
-        else {
-                        
-            guard let conversationId = conversationId,
-                  let name = self.title,
-                  let otherUserId = otherUserId else {
-                return
-            }
-            StorageService.shared.sendMessage(to: conversationId, otherUserId: otherUserId, name: name, newMessage: mmessage, completion: { [weak self] success in
-                
-                if success {
-                    print("additional message sent")
-                    self?.messageInputBar.inputTextView.text = nil
-                }
-                else {
-                    print("failed to send additional message")
-                }
-            })
-        }
     }
-    
-    private func createMessageId() -> String? {
-        // date, otherUserEmail, senderEmail
-        
-        guard let currentUserId = Auth.auth().currentUser?.uid,
-              let otherUserId = otherUserId else {
-            
-            return nil
-        }
-        
-        let dateString = Self.dateFormatter.string(from:Date())
-        let newIdentifier = "\(otherUserId)_\(currentUserId)_\(dateString)"
-        //print("create message id: \(newIdentifier)")
-        return newIdentifier
-    }
-    
 }

@@ -27,7 +27,7 @@ extension SignUpViewController {
     
     func setupTitleLabel() {
         let title = "Sign Up"
-        let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font : UIFont.init(name: "Didot", size: 28)!, NSAttributedString.Key.foregroundColor : UIColor.black ])
+        let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font : UIFont.init(name: "Didot", size: 28)!, NSAttributedString.Key.foregroundColor : UIColor.label ])
         
         titleLabel.attributedText = attributedText
         
@@ -60,7 +60,7 @@ extension SignUpViewController {
         
         fullNameText.borderStyle = .none
         
-        let placeholderAttr = NSAttributedString(string: "Full Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1)])
+        let placeholderAttr = NSAttributedString(string: "username", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1)])
         
         fullNameText.attributedPlaceholder = placeholderAttr
     }
@@ -96,11 +96,11 @@ extension SignUpViewController {
     
     
     func setupSignUpButton() {
-        signUpButton.layer.borderColor = UIColor.black.cgColor
+        signUpButton.layer.borderColor = UIColor.systemGreen.cgColor
         signUpButton.layer.borderWidth = 1.0
         signUpButton.setTitle("Sign Up", for: UIControl.State.normal)
         signUpButton.setTitleColor(.white, for: UIControl.State.normal)
-        signUpButton.backgroundColor = UIColor.black
+        signUpButton.backgroundColor = UIColor.systemGreen
         signUpButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         signUpButton.layer.cornerRadius = 5
         signUpButton.clipsToBounds = true
@@ -109,10 +109,10 @@ extension SignUpViewController {
     
     func setupSignInButton() {
 
-        let attributedSINText = NSMutableAttributedString(string: "Already have an account?" , attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor : UIColor(white:0, alpha:0.65) ])
+        let attributedSINText = NSMutableAttributedString(string: "Already have an account?" , attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor : UIColor.secondaryLabel ])
          
         
-        let attributedBoldSINText = NSMutableAttributedString(string: " Sign In", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14),NSAttributedString.Key.foregroundColor: UIColor(white: 0, alpha: 0.65)])
+        let attributedBoldSINText = NSMutableAttributedString(string: " Sign In", attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14),NSAttributedString.Key.foregroundColor: UIColor.tertiaryLabel])
          
         attributedSINText.append(attributedBoldSINText)
         
