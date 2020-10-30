@@ -23,7 +23,7 @@ Once he presses sign-up:
 check that no field is empty
 ### 2. Sig-up method:
 Calls UserApi.swift to signup with the following method
-* Api.User.signUp(withUsername: self.fullNameText.text!, email: self.emailText.text!, password: self.passwordText.text!, image: self.image) *
+*Api.User.signUp(withUsername: self.fullNameText.text!, email: self.emailText.text!, password: self.passwordText.text!, image: self.image)*
 Using FirebaseAuth createUser method, I create then a dictionary that contains all informations of the user, such as uid, email, username, profileImageUrl, gender, sizes etc..
 {The sizes are not asked as of today, maybe in the future I will add the possibility of requesting sizes for better filtering of cards).
 *let storageProfile = Ref().storageSpecificProfile(uid: authData.user.uid)*
