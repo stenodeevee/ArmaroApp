@@ -9,9 +9,9 @@
 import UIKit
 import ProgressHUD
 
-
-class SignInViewController: UIViewController {
-
+/// Signin in, via Firebase.
+final class SignInViewController: UIViewController {
+    // the signing in is done in the SignInViewController+UI.swift file, that is connected to the User.Api
     
     @IBAction func gobackAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)

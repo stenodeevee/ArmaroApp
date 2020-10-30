@@ -14,8 +14,9 @@ import ProgressHUD
 import CoreLocation
 import GeoFire
 
+/// SignUp View Controller
 class SignUpViewController: UIViewController {
-
+// Exploits UserApi.swift and AppDelegate.swift
 
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
@@ -62,7 +63,6 @@ class SignUpViewController: UIViewController {
         setupSignUpButton()
         setupSignInButton()
         
-        closeButton.tintColor = .label
     }
     
     
@@ -113,9 +113,9 @@ class SignUpViewController: UIViewController {
                 self.geoFire.setLocation(location, forKey: currentUserId)
                 
             }
-            //(UIApplication.shared.delegate as! AppDelegate).toGenderVC()
             
             
+           // once you are logged in, it will check if an user exists and sends to the intial view controller
            (UIApplication.shared.delegate as! AppDelegate).configureInitialViewController()
             
         }) {(errorMessage) in

@@ -24,9 +24,9 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         
-        //fetchUsersPost()
+        // posts are fetched in the viewWillLoad func so
         
-        
+        // layouts
         view.backgroundColor = .systemBackground
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -133,11 +133,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         let model = userPosts[indexPath.row]
-        
-        //let vc = PostViewController(model: model)
-        //vc.title = "Item"
-        //vc.navigationItem.largeTitleDisplayMode = .never
-        //navigationController?.pushViewController(vc, animated: true)
+
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let detailVC = storyboard.instantiateViewController(identifier: "DetailViewController") as! DetailViewController

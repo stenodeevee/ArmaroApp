@@ -35,7 +35,7 @@ class UserApi {
     
 
     
-    
+    // MARK: Sign In
     func signIn(email: String, passoword: String, onSuccess: @escaping() -> Void, onError: @escaping(_ errorMessage: String) -> Void) {
         Auth.auth().signIn(withEmail: email, password: passoword, completion: { (authData, error) in
             if error != nil {
@@ -47,7 +47,7 @@ class UserApi {
         })
     }
     
-    
+    // MARK: Sign Up
     func signUp(withUsername username: String, email: String, password: String, image: UIImage?, onSuccess: @escaping() -> Void, onError: @escaping(_ errorMessage: String) -> Void) {
         
         Auth.auth().createUser(withEmail: email, password: password) {
@@ -101,6 +101,7 @@ class UserApi {
         }
     }
     
+    // MARK: Password Reset
     func resetPassword(email: String, onSuccess: @escaping() -> Void, onError: @escaping(_ errorMessage: String) -> Void) {
         Auth.auth().sendPasswordReset(withEmail: email) { (error) in
             if error == nil {

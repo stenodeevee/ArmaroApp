@@ -255,12 +255,12 @@
 			isa = PBXGroup;
 			children = (
 				6B1757F8250A692700E02F73 /* ViewController.swift */,
-				6B3CE9AE250BA04800B2EACD /* ViewController+UI.swift */,
-				6B3CE9B8250BC0E900B2EACD /* ForgotPasswordViewController.swift */,
-				6B3CE9BA250BC11100B2EACD /* ForgotPasswordViewController+UI.swift */,
 				6B3CE9B4250BBAFF00B2EACD /* SignInViewController.swift */,
-				6B3CE9B6250BBC8B00B2EACD /* SignInViewController+UI.swift */,
 				6B3CE9B0250BA3FA00B2EACD /* SignUpViewController.swift */,
+				6B3CE9B8250BC0E900B2EACD /* ForgotPasswordViewController.swift */,
+				6B3CE9AE250BA04800B2EACD /* ViewController+UI.swift */,
+				6B3CE9BA250BC11100B2EACD /* ForgotPasswordViewController+UI.swift */,
+				6B3CE9B6250BBC8B00B2EACD /* SignInViewController+UI.swift */,
 				6B3CE9B2250BABF000B2EACD /* SignUpViewController+UI.swift */,
 			);
 			path = "Sign-In";

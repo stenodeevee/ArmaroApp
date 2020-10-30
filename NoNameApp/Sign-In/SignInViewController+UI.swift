@@ -11,6 +11,7 @@ import ProgressHUD
 
 extension SignInViewController {
     
+    // MARK: User Interface
     func setupSignInLabel() {
         let title = "Sign In"
         let attributedText = NSMutableAttributedString(string: title, attributes: [NSAttributedString.Key.font : UIFont.init(name: "Didot", size: 28)!, NSAttributedString.Key.foregroundColor : UIColor.label ])
@@ -78,6 +79,8 @@ extension SignInViewController {
         forgotPasswordButton.setAttributedTitle(attributedPSText, for: UIControl.State.normal)
         
     }
+    
+    // MARK: FieldsValidation and Signing In through Firebase
     
     func validateFields() {
         guard let email = self.emailTextField.text, !email.isEmpty else {

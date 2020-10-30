@@ -10,6 +10,7 @@ import UIKit
 
 extension ViewController{
     
+    // title set up
     func setupHeaderTitle() {
         let title = "Welcome to ARMARO"
         let subtitle = "\nSign-in to your account"
@@ -22,6 +23,7 @@ extension ViewController{
         titleLabel.attributedText = attributedText
     }
     
+    // or label in the middle of the screen
     func setupOrLabel() {
         orLabel.text = "Or"
         orLabel.font = UIFont.boldSystemFont(ofSize: 16)
@@ -31,6 +33,7 @@ extension ViewController{
         
     }
 
+    // terms of service label, will be connected to a link in the future
     func setupTermsOfService() {
         let attributedTermsText = NSMutableAttributedString(string: "By clicking ''Create a new account'' you agree to our " , attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14), NSAttributedString.Key.foregroundColor : UIColor.tertiaryLabel])
          
@@ -43,7 +46,7 @@ extension ViewController{
          termsOfServiceLabel.numberOfLines = 0
     }
     
-    
+    // this is actually the log-in button
     func setupGoogleButton() {
         signInGoogle.setTitle("Log in to your Account", for: UIControl.State.normal)
         signInGoogle.setTitleColor(UIColor.white, for: .normal)
@@ -53,7 +56,7 @@ extension ViewController{
         signInGoogle.clipsToBounds = true
         
     }
-    
+    // for signing up
     func setupCreateAccountButton() {
         createNewAccountButton.layer.borderColor = UIColor.label.cgColor
         createNewAccountButton.layer.borderWidth = 1.0
