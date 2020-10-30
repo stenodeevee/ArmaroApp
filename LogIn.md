@@ -5,15 +5,15 @@ The log-in .swift files are all contained in the Sign-in/ folder, though most of
 Welcome scene is Sign-in/ViewController.swift, all I did here is give a choice between signin up or in. The UI is separated from the main code and you will find it in the Sign-in/ViewController+UI.swift file
 
 ## Sign-in
-For the sign-in, check Sign-In/SignInViewController.swift (* the UI is in Sign-In/SignInViewController.swift+UI *). Once the button sign-in is tapped I do two things (* also in the Sign-In/SignInViewController.swift+UI *):
+For the sign-in, check Sign-In/SignInViewController.swift (*the UI is in Sign-In/SignInViewController.swift+UI*). \n Once the button sign-in is tapped I do two things (*also in the Sign-In/SignInViewController.swift+UI*):
 ### 1. ValidateFields:
 Check that email and password text fields are not empty
 ### 2. Sign In:
-Calls Api.User.signIn() method that: uses FirebaseAuth module to authenticate, the logic is written in the UserApi.swift, if success I print the user uid and move to the home page
+Calls Api.User.signIn() method that: uses FirebaseAuth module to authenticate, the logic is written in the UserApi.swift, if success I print the user uid and move to the home page. \n
 If unsuccessful I print the error. AppDelegate.swift takes care of keeping the user logged in in the method AppDelegate.configureInitialViewController()
 
 ## Sign-Up
-Signin up is done in the Sign-In/SignUpViewController.swift (* the UI is in Sign-In/SignUpViewController+UI.swift file *).
+Signin up is done in the Sign-In/SignUpViewController.swift (*the UI is in Sign-In/SignUpViewController+UI.swift file*). \n
 Before anything, the user is asked to provide his location!!!
 The user here is asked to: upload a profile picture, provide username, an email and a password! 
 The profile picture is extracted by imagePickerController, in the extension in the Sign-In/SignUpViewController+UI.swift file.
