@@ -45,49 +45,52 @@ Some info about the database, I used a very flatten data structure, because I di
 }
 
 ### items:
-  saving the item
+  whenever a user posts an item, we will save it in the database with several informations, such as the username of the poster, his profile image url, the photo of the item,
+  the size and type + the conversations that are open between the userPost and the other users
   "items": {
   
-  "author" : "steno",
-        "author_profile_url" : "https://firebasestorage.googleapis.com/v0/b/armaro-f5569.appspot.com/o/profile%2FswqbU9NLgeZrlM2mvcKm1BiRcd72?alt=media&token=23e0575a-e472-4a42-8a80-8809c53b97cf",
-        "brand" : "NIke x Undercover",
-        "conversations" : [ {
-          "id" : "conversation_-MJa1bQtiTXJ9TH4MXE6_-MJa5kU_vVWY-uietTNo_Oct 16, 2020 at 2:09:44 PM GMT+2",
-          "latest_message" : {
-           "data" : "Oct 18, 2020 at 6:34:40 PM GMT+2",
-            "is_read" : false,
-           "message" : "Tuttte dc\n"
-          },
-         "name" : "RickyReds",
-          "other_post_id" : "-MJa5kU_vVWY-uietTNo"
-        }, {
-          "id" : "conversation_-MJa6F5RNiOiTkMg5KGr_-MJa1bQtiTXJ9TH4MXE6_Oct 16, 2020 at 2:11:53 PM GMT+2",
-          "latest_message" : {
-            "data" : "Oct 18, 2020 at 6:29:31 PM GMT+2",
-            "is_read" : false,
-            "message" : "Oooh"
-          },
-          "name" : "RickyReds",
-          "other_post_id" : "-MJa6F5RNiOiTkMg5KGr"
-        }, {
-          "id" : "conversation_-MJwUJvh-bC1UaS19rsA_-MJa1bQtiTXJ9TH4MXE6_26 Oct 2020 at 21:42:18 CET",
-          "latest_message" : {
-           "data" : "26 Oct 2020 at 21:42:18 CET",
-           "is_read" : false,
-           "message" : "Bella mi piace"
-          },
-          "name" : "RickyReds",
-          "other_post_id" : "-MJwUJvh-bC1UaS19rsA"
-        } ],
-        "description" : "NIke shoes, fits narrow, good conditions",
-      "gender" : "M",
-      "image_url" : "https://firebasestorage.googleapis.com/v0/b/armaro-f5569.appspot.com/o/items%2FswqbU9NLgeZrlM2mvcKm1BiRcd72%2FOptional(%22-MJa1bQtiTXJ9TH4MXE6%22).jpeg?alt=media&token=f93339e2-7f62-40db-ae47-c51981143556",
-      "postID" : "-MJa1bQtiTXJ9TH4MXE6",
-      "size" : "45",
-      "type" : "shoes",
-      "userID" : "swqbU9NLgeZrlM2mvcKm1BiRcd72"
-    
+  "postID": {
+            "author" : "steno",
+            "author_profile_url" : url with photo of user,
+            "brand" : string,
+            "conversations" : {
+                              "id" : conversation id,
+                              "latest_message" : {
+                                                  "data" : date,
+                                                  "is_read" : bool,
+                                                   "message" : "text",
+                                                 },
+                              "name" : name of receiver,
+                              "other_post_id" : id of post we are trading,
+                               }
+            "description" : "NIke shoes, fits narrow, good conditions",
+            "gender" : "M",
+            "image_url" : urlwithImage,
+            "postID" : "-MJa1bQtiTXJ9TH4MXE6",
+            "size" : "45",
+            "type" : "shoes",
+            "userID" : "swqbU9NLgeZrlM2mvcKm1BiRcd72",
+            }
+     .... other posts
+
 }
+
+### users:
+  saving the user information
+  "users": {
+  
+  "userID" : {
+              "current_latitude",
+              "current_longitude",
+              "email",
+              "gender",
+              "profileimageurl",
+              "sizes",
+              "uid",
+              "username"
+              }
+  
+  }
 
   
 
