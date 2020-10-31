@@ -49,7 +49,7 @@ Some info about the database, I used a very flatten data structure, because I di
   the size and type + the conversations that are open between the userPost and the other users
   "items": {
   
-  "postID": {
+      "postID": {
             "author" : "steno",
             "author_profile_url" : url with photo of user,
             "brand" : string,
@@ -77,20 +77,23 @@ Some info about the database, I used a very flatten data structure, because I di
 
 ### users:
   saving the user information
-  "users": {
   
-  "userID" : {
-              "current_latitude",
-              "current_longitude",
-              "email",
-              "gender",
-              "profileimageurl",
-              "sizes",
-              "uid",
-              "username"
-              }
+  "geolocs": {
   
+    "userID": {
+      "uid": user id,
+      "username": username,
+      "email": email,
+      "sizes": sizes,
+      "gender": M/F,
+      "profileImageUrl" ,
+      "current_latitude" ,
+      "current_longitude"
+    }
+    ...other users
+    
   }
+  
 
   
 
