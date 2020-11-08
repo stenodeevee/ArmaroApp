@@ -11,6 +11,7 @@ import FirebaseAuth
 import Firebase
 import ProgressHUD
 import FirebaseStorage
+import FirebaseMessaging
 
 
 class UserApi {
