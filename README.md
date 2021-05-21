@@ -31,4 +31,4 @@ update 30/10/2020
 
 I have finally commited and pushed all changes. The code requires some factoring in certain parts, and now that I've finally started beta testing on actual devices, I think it's time to look a little bit at code performance. 
 
-**To Justin**: bro you are going to hate me in this repository, I didn't write any commenting or anything Lolz!
+
